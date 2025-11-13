@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Lobby from './components/Lobby';
+import { Game } from './components/Game';
+import Scoreboard from './components/Scoreboard';
 
-function App() {
+const App: React.FC = () => {
+  const [matchId, setMatchId] = useState<string | null>(null);
+  const [playerId, setPlayerId] = useState<string | null>(null);
+
+  if (!matchId || !playerId) {
+    return (
+      <Lobby
+        onMatchStart={(id) => {
+          setMatchId(id);
+          setPlayerId(`user_${id}`); // simplificado, igual que antes
+        }}
+      />
+    );
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Game matchId={matchId} playerId={playerId} />
+      <Scoreboard />
     </div>
   );
-}
+};
 
 export default App;
