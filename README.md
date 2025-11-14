@@ -1,73 +1,87 @@
-# React + TypeScript + Vite
+### Frontend - DevChallenge3
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este frontend está construido con React + Vite y se conecta al backend
+mediante Socket.IO.
 
-Currently, two official plugins are available:
+------------------------------------------------------------------------
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🚀 Scripts disponibles
 
-## React Compiler
+Dentro del directorio frontend/ puedes ejecutar:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+npm install
 
-## Expanding the ESLint configuration
+Instala todas las dependencias necesarias.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+npm run dev
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Inicia el servidor de desarrollo en:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+    http://localhost:5173
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+npm run build
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Construye la versión de producción.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+npm run preview
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Previsualiza el build de producción.
+
+------------------------------------------------------------------------
+
+### 📂 Estructura del proyecto
+
+    frontend/
+     ├── src/
+     │   ├── api/
+     │   │   └── socket.ts
+     │   ├── components/
+     │   │   ├── Lobby.tsx
+     │   │   ├── Match.tsx
+     │   │   └── Scoreboard.tsx
+     │   ├── App.tsx
+     │   ├── main.tsx
+     │   └── index.css
+     ├── package.json
+     ├── vite.config.ts
+     └── README.txt
+
+------------------------------------------------------------------------
+
+### 🔌 Conexión con el backend
+
+El frontend se conecta automáticamente al backend configurado en:
+
+    http://localhost:4000
+
+A través de Socket.IO (socket.ts).
+
+------------------------------------------------------------------------
+
+### 🏆 Scoreboard
+
+El componente Scoreboard.tsx obtiene datos desde:
+
+    GET http://localhost:4000/api/leaderboard
+
+Si aparece un error de CORS, verifica que el backend tenga activado:
+
+    app.use(cors({
+        origin: 'http://localhost:5173'
+    }));
+
+------------------------------------------------------------------------
+
+### 💡 Requisitos
+
+-   Node.js v16+
+-   NPM o PNPM
+-   Backend activo en puerto 4000
+
+------------------------------------------------------------------------
+
+### ✨ Notas
+
+Este frontend está diseñado para trabajar con el backend del mismo
+proyecto, incluyendo: - matchmaking - rondas - scoreboard - comunicación
+en tiempo real.
